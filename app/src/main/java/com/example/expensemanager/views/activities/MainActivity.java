@@ -1,14 +1,12 @@
-package com.example.expensemanager;
+package com.example.expensemanager.views.activities;
 
 import android.os.Bundle;
 import android.view.Menu;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+import com.example.expensemanager.views.fragments.AddTransactionFragment;
+import com.example.expensemanager.R;
 import com.example.expensemanager.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
@@ -20,6 +18,10 @@ ActivityMainBinding binding;
         setContentView(binding.getRoot());
         setSupportActionBar(binding.materialToolbar);
         getSupportActionBar().setTitle("Transactions");
+
+        binding.floatingActionButton.setOnClickListener(c->{
+             new AddTransactionFragment().show(getSupportFragmentManager(),null);
+        });
 
     }
 
