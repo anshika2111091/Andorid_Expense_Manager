@@ -3,14 +3,23 @@ package com.example.expensemanager.models;
 public class Category {
     private String categoryName;
      private int categoryImage;
-     public Category(){
+     private int categoryColor;
+     public Category(int categoryColor){
 
+         this.categoryColor = categoryColor;
      }
-     public Category(String categoryName,int categoryImage){
+     public Category(String categoryName, int categoryImage, int categoryColor){
          this.categoryImage=categoryImage;
          this.categoryName=categoryName;
+         this.categoryColor = categoryColor;
      }
 
+     public int getCategoryColor(){
+         return categoryColor;
+     }
+     public void setCategoryColor(int categoryColor){
+         this.categoryColor=categoryColor;
+     }
     public String getCategoryName() {
         return categoryName;
     }
