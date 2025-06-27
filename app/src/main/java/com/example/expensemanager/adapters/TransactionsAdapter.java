@@ -18,10 +18,12 @@ import com.example.expensemanager.utils.Helper;
 
 import java.util.ArrayList;
 
+import io.realm.RealmResults;
+
 public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.TransactionsViewHolder> {
-   private final ArrayList<Transaction> transactions;
+   private final RealmResults<Transaction> transactions;
    Context context;
-   public TransactionsAdapter(Context context,ArrayList<Transaction> transactions){
+   public TransactionsAdapter(Context context,RealmResults<Transaction> transactions){
        this.context=context;
        this.transactions=transactions;
    }
