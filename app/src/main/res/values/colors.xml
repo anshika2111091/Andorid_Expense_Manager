@@ -13,4 +13,9 @@
     <color name="category4">#2196f3 </color>
     <color name="category5">#e91e63 </color>
     <color name="category6">#877606 </color>
+
+    <color name="bank_color">#a8004175 </color>
+    <color name="cash_color">#a8007502 </color>
+    <color name="card_color">#a8750033 </color>
+    <color name="default_color">#a8303030 </color>
 </resources>
