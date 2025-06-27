@@ -22,13 +22,22 @@ public class MainViewModel extends AndroidViewModel  {
     public MutableLiveData<Double> totalExpense=new MutableLiveData<>();
     public MutableLiveData<Double> totalAmount =new MutableLiveData<>();
     static Realm realm;
+    Calendar calendar;
     public MainViewModel(@NonNull Application application) {
         super(application);
         Realm.init(application);
         setupDatabase();
     }
 
+
+    public void deleteTransaction(Transaction transaction){
+        realm.beginTransaction();
+        transaction.deleteFromRealm();
+        realm.commitTransaction();
+        getTransactions(calendar);
+    }
     public void  getTransactions(Calendar calendar ){
+        this.calendar=calendar;
         calendar.set(Calendar.HOUR_OF_DAY,0);
         calendar.set(Calendar.MINUTE,0);
         calendar.set(Calendar.MILLISECOND,0);
