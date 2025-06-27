@@ -2,6 +2,7 @@ package com.example.expensemanager.views.fragments;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.PendingIntent;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -21,7 +22,9 @@ import com.example.expensemanager.databinding.FragmentAddTransactionBinding;
 import com.example.expensemanager.databinding.ListDialogBinding;
 import com.example.expensemanager.models.Account;
 import com.example.expensemanager.models.Category;
+import com.example.expensemanager.models.Transaction;
 import com.example.expensemanager.utils.Constants;
+import com.example.expensemanager.views.activities.MainActivity;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.text.SimpleDateFormat;
@@ -41,23 +44,33 @@ public class AddTransactionFragment extends BottomSheetDialogFragment {
         super.onCreate(savedInstanceState);
     }
 FragmentAddTransactionBinding binding;
+    Transaction transaction;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 binding=FragmentAddTransactionBinding.inflate(inflater);
+
+
+transaction=new Transaction();
+
+
+
+
 binding.incomeBtn.setOnClickListener(c->{
     binding.incomeBtn.setBackground(getContext().getDrawable(R.drawable.income_selector));
     binding.expenseBtn.setBackground(getContext().getDrawable(R.drawable.default_selector));
     binding.expenseBtn.setTextColor(getContext().getColor(R.color.textColor));
     binding.incomeBtn.setTextColor(getContext().getColor(R.color.greenColor));
+    transaction.setType(Constants.INCOME);
 });
         binding.expenseBtn.setOnClickListener(c->{
             binding.incomeBtn.setBackground(getContext().getDrawable(R.drawable.default_selector));
             binding.expenseBtn.setBackground(getContext().getDrawable(R.drawable.expense_selector));
             binding.expenseBtn.setTextColor(getContext().getColor(R.color.redColor));
             binding.incomeBtn.setTextColor(getContext().getColor(R.color.textColor));
+            transaction.setType(Constants.EXPENSE);
         });
 
         binding.date.setOnClickListener(c->{
@@ -73,6 +86,8 @@ binding.incomeBtn.setOnClickListener(c->{
                     SimpleDateFormat dateFormat=new SimpleDateFormat("dd MMMM, yyyy ");
                     String dateToShow=dateFormat.format(calendar.getTime());
                     binding.date.setText(dateToShow);
+                    transaction.setDate(calendar.getTime());
+                    transaction.setId(calendar.getTime().getTime()  );
                 }
             });
             datepickerdialog.show();
@@ -87,6 +102,7 @@ binding.incomeBtn.setOnClickListener(c->{
                 @Override
                 public void onCategoryClick(Category category) {
                     binding.category.setText(category.getCategoryName());
+                    transaction.setCategory(category.getCategoryName() );
                     categoryDialog.dismiss();
                 }
             });
@@ -110,6 +126,7 @@ accounts.add(new Account(0,"Cash"));
                 @Override
                 public void onAccountSelected(Account account) {
                     binding.account.setText(account.getAccountName());
+                    transaction.setAccount(account.getAccountName());
                     accountsDialog.dismiss();
                 }
             });
@@ -119,6 +136,22 @@ accounts.add(new Account(0,"Cash"));
             accountsDialog.show();
         });
 
+        binding.saveTransactionBtn.setOnClickListener(c->{
+            double amount=Double.parseDouble(binding.amount.getText().toString());
+             String note= binding.note.getText().toString();
+             if(transaction.getType().equals(Constants.EXPENSE)){
+                 transaction.setAmount(amount*-1);
+             }
+else{
+                 transaction.setAmount(amount);
+             }
+              transaction.setNote(note);
+
+            MainActivity mainActivity = (MainActivity) getActivity();
+           mainActivity.viewModel.addTransactions(transaction);
+           mainActivity.getTransactions();
+            dismiss();
+        });
         return binding.getRoot();
 
     }

@@ -2,6 +2,7 @@ package com.example.expensemanager.views.activities;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
 ActivityMainBinding binding;
 Calendar calendar;
 
-MainViewModel viewModel;
+public MainViewModel viewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,13 @@ viewModel.transactions.observe(this, new Observer<RealmResults<Transaction>>() {
     public void onChanged(RealmResults<Transaction> transactions) {
         TransactionsAdapter adapter=new TransactionsAdapter(MainActivity.this,transactions);
         binding.transactionsList.setAdapter(adapter);
+        if(transactions.size()>0){
+            binding.emptyState.setVisibility(View.GONE );
+        }
+        else{
+            binding.emptyState.setVisibility(View.VISIBLE);
+        }
+
 
     }
 });
@@ -94,7 +102,8 @@ viewModel.totalExpense.observe(this, new Observer<Double>() {
 viewModel.getTransactions(calendar);
     }
 
-
+public void getTransactions(){viewModel.getTransactions(calendar);
+}
 public void updateDate(){
     binding.currentDate.setText(Helper.formatDate(calendar.getTime()));
     viewModel.getTransactions(calendar);

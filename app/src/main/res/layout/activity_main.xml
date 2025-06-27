@@ -8,15 +8,30 @@
     tools:context=".views.activities.MainActivity">
 
 
+    <ImageView
+        android:id="@+id/emptyState"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:alpha="0.4"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/transactionsList"
+        app:layout_constraintEnd_toEndOf="@+id/transactionsList"
+        app:layout_constraintStart_toStartOf="@+id/transactionsList"
+        app:layout_constraintTop_toTopOf="@+id/transactionsList"
+        app:srcCompat="@drawable/empty_state" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/transactionsList"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        tools:listitem="@layout/row_transaction"
+        android:backgroundTint="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
+        app:layout_constraintVertical_bias="1.0"
+        tools:listitem="@layout/row_transaction" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton"

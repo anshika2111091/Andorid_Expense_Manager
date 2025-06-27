@@ -59,12 +59,9 @@ double income=realm.where(Transaction.class)
 //                .findAll();
         transactions.setValue(newtransactions);
     }
-    public static  void addTransactions(){
+    public static  void addTransactions(Transaction transaction ){
         realm.beginTransaction();
-        realm.copyToRealmOrUpdate(new Transaction( "Cash", Constants.EXPENSE,"Business","Some note here",new Date(),-543,new Date( ).getTime()));
-        realm.copyToRealmOrUpdate(new Transaction( "Other",Constants.INCOME,"Rent","Some note here",new Date(),663,new Date( ).getTime() ));
-        realm.copyToRealmOrUpdate(new Transaction( "Card",Constants.EXPENSE,"Investment","Some note here",new Date(),-434,new Date( ).getTime()));
-        realm.copyToRealmOrUpdate(new Transaction( "Bank",Constants.INCOME,"Salary","Some note here",new Date(),235 ,new Date( ).getTime()));
+        realm.copyToRealmOrUpdate(transaction);
         realm.commitTransaction();
     }
     void setupDatabase(){
