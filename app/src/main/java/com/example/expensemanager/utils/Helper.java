@@ -8,5 +8,9 @@ public class Helper {
         SimpleDateFormat dateformat=new SimpleDateFormat("dd MMMM, yyyy");
         return dateformat.format(date);
     }
+    public static String formatDateByMonth(Date date){
+        SimpleDateFormat dateformat=new SimpleDateFormat(" MMMM, yyyy");
+        return dateformat.format(date);
+    }
 
 }
